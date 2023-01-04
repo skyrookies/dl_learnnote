@@ -22,3 +22,7 @@
   - convnext.py：网络模型。
 - ConvNeXt.pdf：论文笔记。
 - ConvNeXt.pptx：论文汇报PPT。
+
+## 2023-1-4
+
+LJTJ添加ghostnet相关代码，该代码为W注释的旧版本代码，同步仓库方便多端学习
