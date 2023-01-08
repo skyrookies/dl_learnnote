@@ -22,11 +22,15 @@
   - convnext.py：网络模型。
 - ConvNeXt.pdf：论文笔记。
 - ConvNeXt.pptx：论文汇报PPT。
-
 ## 2023-1-4
-
 LJTJ添加ghostnet相关代码，该代码为W注释的旧版本代码，同步仓库方便多端学习
-
 ## 2023-1-6
-
 学习完SEnet 笔记同步（是否记录过于琐碎 以后还是一段时间的工作结束后一次性上传？ 但是多端同步就是为了方便平时记录 怕有什么忘了的）
+## 2023-1-08
+由W添加dl\_learnnote\dl\_learn\_note\trick\DataBlance&Augmentation，内容包含数据平衡与增强代码和方法介绍。详情如下：
+- code
+  - Deal.py：执行脚本。
+  - ImageOperate.py：数据平衡和增强方法类，包含图像处理和方法定义。
+- README.md：相关文档。
+- 示例图片：文档中的图片。
+
