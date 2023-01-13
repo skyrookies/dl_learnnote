@@ -22,15 +22,26 @@
   - convnext.py：网络模型。
 - ConvNeXt.pdf：论文笔记。
 - ConvNeXt.pptx：论文汇报PPT。
-## 2023-1-4
+## 2023-01-4
 LJTJ添加ghostnet相关代码，该代码为W注释的旧版本代码，同步仓库方便多端学习
-## 2023-1-6
+## 2023-01-6
 学习完SEnet 笔记同步（是否记录过于琐碎 以后还是一段时间的工作结束后一次性上传？ 但是多端同步就是为了方便平时记录 怕有什么忘了的）
-## 2023-1-08
+## 2023-01-08
 由W添加dl\_learnnote\dl\_learn\_note\trick\DataBlance&Augmentation，内容包含数据平衡与增强代码和方法介绍。详情如下：
 - code
   - Deal.py：执行脚本。
   - ImageOperate.py：数据平衡和增强方法类，包含图像处理和方法定义。
 - README.md：相关文档。
 - 示例图片：文档中的图片。
+## 2023-01-13
+由W添加dl\_learnnote\dl\_learn\_note\YOLO series\YOLOv7\backbone，主要内容包含YOLOv7使用的backbone-ELAN的相关介绍。
+- ELAN.pdf：论文笔记。
+- ELAN.pptx：论文汇报PPT。
+更新：添加了ConvNeXt模型的预训练权重，详情见本仓库下的ConvNeXt文件夹。
+
+
+
+
+
+
 
