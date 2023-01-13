@@ -37,6 +37,7 @@ LJTJ添加ghostnet相关代码，该代码为W注释的旧版本代码，同步�
 由W添加dl\_learnnote\dl\_learn\_note\YOLO series\YOLOv7\backbone，主要内容包含YOLOv7使用的backbone-ELAN的相关介绍。
 - ELAN.pdf：论文笔记。
 - ELAN.pptx：论文汇报PPT。
+
 更新：添加了ConvNeXt模型的预训练权重，详情见本仓库下的ConvNeXt文件夹。
 
 
