@@ -25,7 +25,7 @@ def GetFiles(path):
         a list: File path list.
     """
     return [os.path.join(path, f) for f in os.listdir(path) if f.endswith('.jpg') or f.endswith('.png')]
-
+·
 
 def is_need_data_blance(classes_num, conservative=True):
     """Whether dataset balancing is required

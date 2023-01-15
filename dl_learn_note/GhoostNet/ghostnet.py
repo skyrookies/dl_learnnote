@@ -91,16 +91,20 @@ class ConvBnAct(nn.Module):
 
 # GhostModel主要作用是生成特征图
 class GhostModule(nn.Module):
-    def __init__(self, inp, oup, kernel_size=1, ratio=2, dw_size=3, stride=1, relu=True):
+    def __init__(self, inp, oup, kernel_size=1, ratio=2,
+                 dw_size=3, stride=1, relu=True):
         super(GhostModule, self).__init__()
         self.oup = oup
-
+        # ratio 比率 超参数，即论文中的s用来控制生成内在特征图的个数
+        # 经作者实验 s=2 时，Ghost模块的性能甚至比原始模型稍好，
+        # 表明了所提出的Ghost模块的优越性
         # math.ceil(x)->返回大于等于x的一个整数
         # init_channels：原始固有特征图数量
         # new_channels：廉价操作生成的特征图数量
+        # 除去固有数量的特征图 剩下部分的特征图由线形操作（ghost）生成
         init_channels = math.ceil(oup / ratio)
         new_channels = init_channels * (ratio - 1)
-
+        # 原始固有特征图由卷积生成
         self.primary_conv = nn.Sequential(
             # inp：输入通道数；
             # init_channels：输出通道数
@@ -121,12 +125,14 @@ class GhostModule(nn.Module):
         self.cheap_operation = nn.Sequential(
             # init_channels：输入通道数
             # new_channels：输出通道数
-            # dw_size：卷积核大小
-            # 1：stride，步长大小
+            # dw_size：深度卷积卷积核大小
+            # 1：stride，步长大小。，。
             # dw_size//2：padding，填充
             # groups=init_channels，分组数等于输入通道数，此卷积演化为深度卷积
+            # 分组卷积分组为输入通道数时即为深度卷积
             # bias：偏置值
-            nn.Conv2d(init_channels, new_channels, dw_size, 1, dw_size // 2, groups=init_channels, bias=False),
+            nn.Conv2d(init_channels, new_channels, dw_size, 1, dw_size // 2,
+                      groups=init_channels, bias=False),
             nn.BatchNorm2d(new_channels),
             nn.ReLU(inplace=True) if relu else nn.Sequential(),
         )
@@ -134,8 +140,12 @@ class GhostModule(nn.Module):
     def forward(self, x):
         x1 = self.primary_conv(x)
         x2 = self.cheap_operation(x1)
+        # torch.cat(dim=1) 在dim=1维度上拼接
         out = torch.cat([x1, x2], dim=1)
         # out[:, :self.oup, :, :]保证输出张量的通道数与设定的输出通道数一致
+        # 通过使用 : 作为第一维的索引，意味着我们取出了所有第一维的元素。
+        # 第二维的索引是 :self.oup ，意味着我们取出了从第一个元素到 self.oup 个元素。
+        # 第三维和第四维同理
         return out[:, :self.oup, :, :]
 
 
@@ -155,7 +165,12 @@ class GhostBottleneck(nn.Module):
         self.ghost1 = GhostModule(in_chs, mid_chs, relu=True)
 
         # Depth-wise convolution（深度可分离卷积）
+        # 修正：深度卷积是用每个通道一个卷积核来进行卷积。
+        # 而深度可分离卷积是先用每个通道一个卷积核来提取特征，再用一个卷积核来融合特征
+        # Depth-wise convolution 仅指深度卷积
         # 只要stride=2时执行
+        # 每一次以stride为2 进行深度卷积操作时，即为论文所述的幻影ghost操作
+        # 以较为廉价的线形卷积生成更多的特征图 即增加了通道数
         if self.stride > 1:
             self.conv_dw = nn.Conv2d(mid_chs, mid_chs, dw_kernel_size, stride=stride,
                                      padding=(dw_kernel_size - 1) // 2,
@@ -169,8 +184,9 @@ class GhostBottleneck(nn.Module):
         else:
             self.se = None
 
-        # Point-wise linear projection
+        # Point-wise linear projection(逐点线性投影)
         # 根据论文，第二个GhostModel后不接ReLU
+        # 没经过Relu激活函数 仅经过卷积和BN 仍是线形操作
         self.ghost2 = GhostModule(mid_chs, out_chs, relu=False)
 
         # shortcut
@@ -195,6 +211,7 @@ class GhostBottleneck(nn.Module):
         x = self.ghost1(x)
 
         # Depth-wise convolution（深度可分离卷积）
+        # 修正： 深度卷积，而非深度可分离卷积
         if self.stride > 1:
             x = self.conv_dw(x)
             x = self.bn_dw(x)
