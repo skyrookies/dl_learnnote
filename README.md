@@ -41,5 +41,8 @@ LJTJ添加ghostnet相关代码，该代码为W注释的旧版本代码，同步�
 更新：添加了ConvNeXt模型的预训练权重，详情见本仓库下的ConvNeXt文件夹。
 
 ## 2023-01-15
-
-Ghost net 代码阅读完毕，在W写过的注释上完善。添加代码阅读笔记，标记我关注的几点内容，以后可能用的上
+GhostNet代码阅读完毕，在W写过的注释上完善。添加代码阅读笔记，标记我关注的几点内容，以后可能用的上。
+## 2023-01-18
+由W添加dl\_learnnote\dl\_learn\_note\trick\TricksForImageClassification，主要介绍CNN在分类任务上的训练技巧，论文提及了多种方法具有参考价值，详情如下：
+- 论文笔记。
+- 论文汇报PPT。
