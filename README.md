@@ -76,7 +76,7 @@ net = MobilNet(cfgs=cfgs, ratio=0.25, **kwargs)
 
 ## 2023-01-29
 
-由W添加classification\轻量化网络\MobileNet系列\ShuffleNetV1，主要包含了ShuffleNetV1相关内容，详情如下：
+由W添加dl\_learn\_note\dl\_learn\_note\ShuffleNetV1，主要包含了ShuffleNetV1相关内容，详情如下：
 
 - ShuffleNetV1.pdf：论文笔记。
 - ShuffleNetV1.pptx：论文汇报PPT。
