@@ -96,3 +96,13 @@ net = ShuffleNet_050_g3()
 ## 2023-04-07
 
 LJ 添加翻译文档，pytorch.OPTIM官方文档中文翻译，torch2.0
+
+## 2023-04-25
+
+W创建Vision Transformer（长期更新）
+
+**note** : 不再提供复现代码与训练脚本，请自信查阅官方代码仓库！仅提供论文部分注释和PPT。
+
+已有内容：
+- ViT
+- DeiT
